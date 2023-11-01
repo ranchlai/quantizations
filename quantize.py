@@ -65,6 +65,8 @@ def main(args):
     logger.info(f"Quantizing model...done in {time.time()/3600 - t/3600} hours")
     logger.info("Saving model")
     quantized_model.save_pretrained(args.output_folder)
+    # save the tokenizer
+    tokenizer.save_pretrained(args.output_folder)
     logger.info("done")
 
 
