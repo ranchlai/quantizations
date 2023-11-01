@@ -315,8 +315,12 @@ class QWenAttention(nn.Module):
                 # attn_weights = attn_weights.to(query.dtype).contiguous()
             else:
                 key = dequantize_cache_torch(qk, qk_scale, qk_zero)
+                if query.dtype != key.dtype:
+                    query = query.to(key.dtype)
                 attn_weights = torch.matmul(query, key.transpose(-1, -2))
         else:
+            if query.dtype != key.dtype:
+                query = query.to(key.dtype)
             attn_weights = torch.matmul(query, key.transpose(-1, -2))
 
         if self.scale_attn_weights:
