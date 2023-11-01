@@ -51,7 +51,7 @@ def main(args):
         dataset=examples,
         block_name_to_quantize=args.block_name_to_quantize,
         model_seqlen=2048,
-        group_size=512,
+        group_size=args.group_size,
         damp_percent=0.1,
         desc_act=False,
         sym=True,
@@ -97,6 +97,7 @@ if __name__ == "__main__":
         action="store_true",
         help="Trust remote code (default: False)",
     )
+    parser.add_argument("--group_size", type=int, default=1, help="Group size")
     parser.add_argument(
         "--seed", type=int, default=42, help="Random seed (default: 42)"
     )
