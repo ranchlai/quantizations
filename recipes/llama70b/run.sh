@@ -1,4 +1,10 @@
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0
+
+# if Llama-2-70b-hf  not exist
+if [ ! -d "Llama-2-70b-hf" ]; then
+  ln -s /workspace/llama-2-70b-hf Llama-2-70b-hf
+fi
+
 python ../../quantize.py \
 --model_name  Llama-2-70b-hf \
 --data data.json \
