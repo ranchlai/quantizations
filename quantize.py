@@ -34,9 +34,10 @@ def main(args):
     tokenizer = AutoTokenizer.from_pretrained(
         args.model_name, trust_remote_code=args.trust_remote_code
     )
+    
     model = AutoModelForCausalLM.from_pretrained(
         args.model_name,
-        torch_dtype=torch.float16,
+        torch_dtype=torch.float16 if args.torch_dtype == "float16" else torch.bfloat16,
         trust_remote_code=args.trust_remote_code,
     )
     print("Quantizing model")
@@ -109,6 +110,13 @@ if __name__ == "__main__":
         default="transformer.h",
         help="Block name to quantize (default: transformer.h)",
     )  # "model.layers"
+    
+    parser.add_argument(
+        "--torch_dtype",
+        type=str,
+        default="float16",
+        help="Torch dtype (default: float16)",
+    )
 
     args = parser.parse_args()
     main(args)
